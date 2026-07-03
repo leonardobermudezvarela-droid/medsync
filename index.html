@@ -599,33 +599,8 @@
             });
         }
 
-        // Base de Datos en Memoria (Fallback de Simulación con nuevos campos de estado)
-        let localDB = [
-            {
-                id: "MOCK-1",
-                timestamp: "02/07/2026 10:15:32",
-                expediente: "CRM-19",
-                esNuevo: true,
-                estadoParticipante: "Activo",
-                fechaVisita: "2026-07-02",
-                formularios: ["Cuestionario #1 (1visita)", "Antropometría y bioimpedancia (1visita)"],
-                notes: "Primera visita realizada con éxito. Participante muy colaboradora.",
-                estado: "Pendiente",
-                usuario: "Dra"
-            },
-            {
-                id: "MOCK-2",
-                timestamp: "01/07/2026 15:45:00",
-                expediente: "CRM-15",
-                esNuevo: false,
-                estadoParticipante: "Finalizó",
-                fechaVisita: "",
-                formularios: ["[Cambio de Estado: Finalizó]"],
-                notes: "El participante culminó formalmente todo el estudio de manera satisfactoria. [Nota Leonardo]: Completada la auditoría del archivo.",
-                estado: "Procesado por Leonardo",
-                usuario: "Dra"
-            }
-        ];
+        // Base de Datos en Memoria limpia de forma predeterminada para evitar duplicar mock data
+        let localDB = [];
 
         let currentUser = null;
         let googleSheetsURL = localStorage.getItem('medsync_sheets_url') || DEFAULT_MACRO_URL;
@@ -1091,7 +1066,7 @@
 
         // Cancelar edición de la fecha de visita
         function cancelVisitEdit(id) {
-            document.getElementById(`visit-view-${id}`).classList.remove('hidden');
+            document.getElementById(`visit-view-${id}`).remove('hidden');
             document.getElementById(`visit-edit-${id}`).classList.add('hidden');
         }
 
