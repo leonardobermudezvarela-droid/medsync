@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MedSync Tracker - Control de Expedientes</title>
+    <!-- Metas y Enlaces Obligatorios para la Instalación como App Real (PWA) -->
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icono.png" type="image/png">
+    <link rel="apple-touch-icon" href="icono.png">
+    
     <!-- Tailwind CSS para diseño moderno -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons para iconos estéticos -->
@@ -579,10 +585,19 @@
     <!-- PROGRAMA PRINCIPAL -->
     <script>
         // ================= CONFIGURACIÓN POR DEFECTO (AUTOMÁTICA) =================
-        // Pega tus enlaces aquí en medio de las comillas para que la app funcione en todos los celulares automáticamente:
+        // Tus enlaces clínicos reales configurados automáticamente para todo el equipo:
         const DEFAULT_MACRO_URL = "https://script.google.com/macros/s/AKfycbz5UictsLXcs0MMaa2UMpAis25nA01r-4uGlbSvql-clrsKgNKos2hFiytwlOfIjcpP/exec"; 
         const DEFAULT_SPREADSHEET_URL = "https://docs.google.com/spreadsheets/d/1L2wnPhL-ksTLW3V6by-wr1e6S2qegqUoqM407-mSJmo/edit?usp=sharing";
         // ==========================================================================
+
+        // Registrar el service worker para habilitar la instalación de la PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker registrado con éxito en el ámbito:', reg.scope))
+                    .catch(err => console.error('Error al registrar el Service Worker obligatorio PWA:', err));
+            });
+        }
 
         // Base de Datos en Memoria (Fallback de Simulación con nuevos campos de estado)
         let localDB = [
@@ -644,7 +659,7 @@
             document.getElementById('btn-logout').addEventListener('click', handleLogout);
             document.getElementById('btn-refresh-data').addEventListener('click', loadData);
             document.getElementById('dashboard-search').addEventListener('input', renderDashboard);
-            document.getElementById('btn-clear-selection').addEventListener('click', clearAllCheckboxes); // NUEVO
+            document.getElementById('btn-clear-selection').addEventListener('click', clearAllCheckboxes);
             
             // Botón de cambio de rol
             document.getElementById('btn-switch-role').addEventListener('click', handleRoleSwitch);
@@ -823,7 +838,7 @@
                 selectCheckbox("Agua corporal (3visita)");
                 showToast("Atajo: 3ra Visita seleccionado", "info");
             } else if (visitType === 'v4') {
-                // 4 Visita: Cuestionario #2 + Antropometría bebé y madre + Agua corporal madre y bebé (Nombres Actualizados)
+                // 4 Visita: Cuestionario #2 + Antropometría bebé y madre + Agua corporal madre y bebé
                 selectCheckbox("Cuestionario #2 (4visita)");
                 selectCheckbox("Antropometría 4visita (3 meses vida)");
                 selectCheckbox("Antropometría 4visita (3 meses post)");
