@@ -3,21 +3,20 @@
   "name": "MedSync Tracker",
   "icons": [
     {
-      "src": "icono.png",
+      "src": "./icono.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "icono.png",
+      "src": "./icono.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": "index.html",
+  "start_url": "./index.html",
+  "scope": "./",
   "background_color": "#4f46e5",
   "theme_color": "#4f46e5",
   "display": "standalone",
   "orientation": "portrait"
 }
-
-
